@@ -27,7 +27,7 @@ We will be creating a static HTML page using markdown to avoid spending our time
 ## Citations
 - Kirkpatrick SI, McIntyre L, Potestio ML. Child Hunger and Long-term Adverse Consequences for Health. Arch Pediatr Adolesc Med. 2010;164(8):754–762. doi:10.1001/archpediatrics.2010.117 
 - Christine M. Olson; Nutrition and Health Outcomes Associated with Food Insecurity and Hunger, The Journal of Nutrition, Volume 129, Issue 2, 1 February 1999, Pages 521S–524S, https://doi.org/10.1093/jn/129.2.521S
-- Hunger in America, https://phcnpg.org/docs/Welcome%20Page/hunger-in-america-2014-full-report.pdf
-https://ovidsp.tx.ovid.com/sp-3.32.2a/ovidweb.cgi
-- Feeding America, https://www.feedingamerica.org/hunger-in-america/child-hunger-facts 
-- The Hungry and Overweight Paradox, https://www.eatright.org/health/weight-loss/overweight-and-obesity/the-hungry-and-overweight-paradox 
+- [Hunger in America](https://phcnpg.org/docs/Welcome%20Page/hunger-in-america-2014-full-report.pdf)
+- [Feeding America](https://www.feedingamerica.org/hunger-in-america/child-hunger-facts) 
+- [The Hungry and Overweight Paradox](https://www.eatright.org/health/weight-loss/overweight-and-obesity/the-hungry-and-overweight-paradox)
+- [USDA Data](https://www.ers.usda.gov/data-products/food-environment-atlas/data-access-and-documentation-downloads/)
