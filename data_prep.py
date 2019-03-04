@@ -16,7 +16,10 @@ health = pd.read_excel(xls, 'HEALTH')
 socioeconomic = pd.read_excel(xls, 'SOCIOECONOMIC')
 
 # Explore variables
-
+# We'll want to map the variables to the column names
+county_supp_data.columns # state, county, 2010 Census Population
+state_supp_data.columns # state, National School Lunch Program participants FY 2011, State Population 2011
+access.columns #
 
 # Scope variables
 scoped = pd.DataFrame()
