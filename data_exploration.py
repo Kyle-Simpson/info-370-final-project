@@ -13,6 +13,7 @@ data = pd.read_csv("./data/prepped/compiled_data.csv")
 # Food insecurity all specific to children: 
 
 # What does food insecurity look like on a map?
+plt.hist(data.FOODINSEC_CHILD_01_07)
 
 # How does food insecurity relate to income and race?
 #FOODINSEC_13_15
