@@ -12,23 +12,45 @@ data = pd.read_csv("data/prepped/compiled_data.csv")
 county = pd.read_csv("data/prepped/insec15-state-codes.csv")
 county["County"] = county.COUNTY
 
-data = data.merge(county, on='County')
+sorted_data = data.sort_values(['County', 'State'])
+sorted_data = sorted_data.reset_index(drop=True)
+#sorted_data = sorted_data.drop(index=123, axis=0) # drop duplicate Baltimore 
+
+sorted_county = county.sort_values(['County', 'STATE'])
+sorted_county = sorted_county.reset_index(drop=True)
+
+
+sorted_data['county_food_insec'] = sorted_county.FOOD_INSEC
+sorted_data['test_county'] = sorted_county.County
+sorted_data['test_state'] = sorted_county.STATE
+
+sort_data = sorted_data[['State','County', 'test_county', 'county_food_insec', 'test_state']]
+
+print("start")
+
+for row in sorted_data.iterrows():
+    row = row[1]
+    if (row['County'] != row['test_county']):
+        print(row['County'] + "    |    " + row['test_county'])
+
+
+
 # Food insecurity all specific to children: 
 
 # What does food insecurity look like on a map?
-plt.hist(data.FOODINSEC_CHILD_01_07)
+#plt.hist(data.FOODINSEC_CHILD_01_07)
 
 # How does food insecurity relate to income and race?
 #FOODINSEC_13_15
 #MEDHHINC15
-plt.figure(figsize=(20,20))
-plt.scatter(data.MEDHHINC15, data.FOODINSEC_13_15)
-plt.show()
+#plt.figure(figsize=(20,20))
+#plt.scatter(data.MEDHHINC15, data.FOODINSEC_13_15)
+#plt.show()
 
 #POVRATE15
-plt.figure(figsize=(20,20))
-plt.scatter(data.POVRATE15, data.FOODINSEC_13_15)
-plt.show()
+#plt.figure(figsize=(20,20))
+#plt.scatter(data.POVRATE15, data.FOODINSEC_13_15)
+#plt.show()
 
 # How much food insecurity is there?
 
