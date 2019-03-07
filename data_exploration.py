@@ -10,7 +10,9 @@ import matplotlib.pyplot as plt
 
 data = pd.read_csv("data/prepped/compiled_data.csv")
 county = pd.read_csv("data/prepped/insec15-state-codes.csv")
+county["County"] = county.COUNTY
 
+data = data.merge(county, on='County')
 # Food insecurity all specific to children: 
 
 # What does food insecurity look like on a map?

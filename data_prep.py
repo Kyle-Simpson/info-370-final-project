@@ -83,6 +83,10 @@ scoped = scoped.merge(assistance, on='FIPS')
 scoped = scoped.merge(local, on='FIPS')
 scoped
 
+county = pd.read_csv("data/prepped/insec15-state-codes.csv")
+
+scoped["FOOD_INSEC_15"] = county.FOOD_INSEC
+scoped["FOOD_INSEC_CH_15"] = county.FOOD_INSEC_CHILDREN
 
 # Write scoped variables to new csv
 scoped.to_csv('./data/prepped/compiled_data.csv', sep=",", index=False)
