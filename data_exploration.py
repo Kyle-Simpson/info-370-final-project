@@ -6,12 +6,14 @@ Created on Thu Mar  7 13:46:20 2019
 """
 
 import pandas as pd
+import mathplotlib.pyplot as plt
 
 data = pd.read_csv("./data/prepped/compiled_data.csv")
 
 # Food insecurity all specific to children: 
 
 # What does food insecurity look like on a map?
+
 
 # How does food insecurity relate to income and race?
 
