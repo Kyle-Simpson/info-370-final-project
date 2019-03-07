@@ -8,7 +8,8 @@ Created on Thu Mar  7 13:46:20 2019
 import pandas as pd
 import matplotlib.pyplot as plt
 
-data = pd.read_csv("./data/prepped/compiled_data.csv")
+data = pd.read_csv("data/prepped/compiled_data.csv")
+county = pd.read_csv("data/prepped/insec15-state-codes.csv")
 
 # Food insecurity all specific to children: 
 
