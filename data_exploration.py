@@ -17,6 +17,16 @@ county = pd.read_csv("data/prepped/insec15-state-codes.csv")
 plt.hist(data.FOODINSEC_CHILD_01_07)
 
 # How does food insecurity relate to income and race?
+#FOODINSEC_13_15
+#MEDHHINC15
+plt.figure(figsize=(20,20))
+plt.scatter(data.MEDHHINC15, data.FOODINSEC_13_15)
+plt.show()
+
+#POVRATE15
+plt.figure(figsize=(20,20))
+plt.scatter(data.POVRATE15, data.FOODINSEC_13_15)
+plt.show()
 
 # How much food insecurity is there?
 
