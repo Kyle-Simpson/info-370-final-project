@@ -71,6 +71,9 @@ wanted = ['FIPS', 'DIRSALES07','DIRSALES12','FMRKT09','FMRKT16','FMRKT_SNAP16','
 local = local[wanted]
 local.columns
 
+county = pd.read_csv("data/prepped/insec15.csv")
+county["FIPS"] = county.Fips
+county = county[["FIPS", "Food_Insec", "Food_Insec_Children"]]
 
 # Scope variables
 scoped = pd.DataFrame()
@@ -81,12 +84,8 @@ scoped = scoped.merge(prices_taxes, on='FIPS')
 scoped = scoped.merge(restaurants, on='FIPS')
 scoped = scoped.merge(assistance, on='FIPS')
 scoped = scoped.merge(local, on='FIPS')
+scoped = scoped.merge(county, on='FIPS')
 scoped
-
-county = pd.read_csv("data/prepped/insec15-state-codes.csv")
-
-scoped["FOOD_INSEC_15"] = county.FOOD_INSEC
-scoped["FOOD_INSEC_CH_15"] = county.FOOD_INSEC_CHILDREN
 
 # Write scoped variables to new csv
 scoped.to_csv('./data/prepped/compiled_data.csv', sep=",", index=False)
