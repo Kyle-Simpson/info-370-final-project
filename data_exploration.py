@@ -20,17 +20,50 @@ data = data.drop(["FOODINSEC_CHILD_03_11", "FOODINSEC_CHILD_01_07", "PERCHLDPOV1
 # What does food insecurity look like on a map?
 
 # How does food insecurity relate to income and race?
-plt.figure(figsize=(10,10))
-plt.scatter(data.MEDHHINC15, data.Food_Insec)
-plt.title("Median household income versus food insecurity")
-plt.show()
 
-plt.figure(figsize=(10,10))
-plt.scatter(data.POVRATE15, data.Food_Insec)
-plt.title("Poverty rate versus food insecurity")
-plt.show()
 
-plt.figure(figsize=(10,10))
+
+def plot_food_insec(type_insec, label):
+    plt.figure(figsize=(10,10))
+    fig, ax = plt.subplots(1, 3)
+    fig.set_figheight(10)
+    fig.set_figwidth(20)
+
+    label = label + " Food Insecurity"
+    ax[0].set_title("Median Household Income versus " +  label)
+    sns.regplot(data.MEDHHINC15, data[type_insec], line_kws={"color": "black"}, 
+                scatter_kws={'alpha':0.3}, ax=ax[0])
+    ax[0].set_xlabel("Median Household Income")
+    ax[0].set_ylabel(label)
+    
+    ax[1].set_title("Poverty Rate versus " + label)
+    sns.regplot(data.POVRATE15, data[type_insec], line_kws={"color": "black"}, 
+                scatter_kws={'alpha':0.3}, ax=ax[1])
+    ax[1].set_xlabel("Poverty Rate")
+    ax[1].set_ylabel(label)
+    
+    ax[2].set_title("Percent White versus " + label)
+    sns.regplot(data.PCT_NHWHITE10, data[type_insec], line_kws={"color": "black"}, 
+                scatter_kws={'alpha':0.3}, ax=ax[2])
+    ax[2].set_xlabel("Percent White of Population")
+    ax[2].set_ylabel(label)
+    
+    ax[0].set_ylim(0, 40)
+    ax[1].set_ylim(0, 40)
+    ax[2].set_ylim(0, 40)
+    ax[2].set_xlim(0, 100)
+
+def plot_adult_food_insec():
+    plot_food_insec("Food_Insec", "Adult")
+    
+def plot_child_food_insec():
+    plot_food_insec("Food_Insec_Children", "Child")
+
+plot_adult_food_insec()
+plot_child_food_insec()
+
+'''
+plt.figure(figsize=(20,20))
 plt.scatter(data.PCT_NHWHITE10, data.Food_Insec)
 plt.title("Percent white versus food insecurity")
 plt.show()
@@ -40,6 +73,7 @@ plt.figure(figsize=(10,10))
 plt.scatter(data.REDEMP_SNAPS16, data.Food_Insec)
 
 corr = data.corr()[['Food_Insec', 'Food_Insec_Children']]
+'''
 
 # How much food insecurity is there?
 
@@ -51,4 +85,3 @@ corr = data.corr()[['Food_Insec', 'Food_Insec_Children']]
 # How do food programs relate to food insecurity?
 
 # How does adult food insecurity relate to children food insecurity?
-
