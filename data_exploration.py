@@ -9,19 +9,6 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 data = pd.read_csv("data/prepped/compiled_data.csv")
-#county = pd.read_csv("data/prepped/insec15.csv")
-#county["FIPS"] = county.Fips
-#
-#county = county[["FIPS", "Food_Insec", "Food_Insec_Children"]]
-#data = data[["County","State", "FIPS"]]
-#data = data.merge(county, on='FIPS')
-
-#print("start")
-#
-#for row in data.iterrows():
-#    row = row[1]
-#    if (row['County_x'] != row['County_y']):
-#        print(row['County_x'] + "    |    " + row['County_y'])
 
 # Food insecurity all specific to children: 
 
