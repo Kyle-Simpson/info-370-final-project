@@ -18,19 +18,28 @@ data = pd.read_csv("data/prepped/compiled_data.csv")
 # Food insecurity all specific to children: 
 
 # What does food insecurity look like on a map?
-plt.hist(data.Food_Insec)
 
 # How does food insecurity relate to income and race?
-#FOODINSEC_13_15
-#MEDHHINC15
-#plt.figure(figsize=(20,20))
-#plt.scatter(data.MEDHHINC15, data.FOODINSEC_13_15)
-#plt.show()
+plt.figure(figsize=(20,20))
+plt.scatter(data.MEDHHINC15, data.Food_Insec)
+plt.title("Median household income versus food insecurity")
+plt.show()
 
-#POVRATE15
-#plt.figure(figsize=(20,20))
-#plt.scatter(data.POVRATE15, data.FOODINSEC_13_15)
-#plt.show()
+plt.figure(figsize=(20,20))
+plt.scatter(data.POVRATE15, data.Food_Insec)
+plt.title("Poverty rate versus food insecurity")
+plt.show()
+
+plt.figure(figsize=(20,20))
+plt.scatter(data.PCT_NHWHITE10, data.Food_Insec)
+plt.title("Percent white versus food insecurity")
+plt.show()
+
+# Snap versus food insecurity
+plt.figure(figsize=(20,20))
+plt.scatter(data.REDEMP_SNAPS16, data.Food_Insec)
+
+corr = data.corr()[['Food_Insec', 'Food_Insec_Children']]
 
 # How much food insecurity is there?
 
