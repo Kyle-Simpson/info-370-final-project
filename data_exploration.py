@@ -14,9 +14,12 @@ county["County"] = county.COUNTY
 
 sorted_data = data.sort_values(['County', 'State'])
 sorted_data = sorted_data.reset_index(drop=True)
-#sorted_data = sorted_data.drop(index=123, axis=0) # drop duplicate Baltimore 
+sorted_data = sorted_data.drop(index=123, axis=0) # drop duplicate Baltimore
+sorted_data = sorted_data.reset_index(drop=True)
 
 sorted_county = county.sort_values(['County', 'STATE'])
+sorted_county = sorted_county.reset_index(drop=True)
+sorted_county = sorted_county.drop(index=797, axis=0) # drop Dona Ana
 sorted_county = sorted_county.reset_index(drop=True)
 
 
@@ -28,10 +31,14 @@ sort_data = sorted_data[['State','County', 'test_county', 'county_food_insec', '
 
 print("start")
 
+i = 0
 for row in sorted_data.iterrows():
     row = row[1]
     if (row['County'] != row['test_county']):
-        print(row['County'] + "    |    " + row['test_county'])
+        print(i)
+        print(str(row['County']) + "    |    " + str(row['test_county']))
+        break
+    i += 1
 
 
 
