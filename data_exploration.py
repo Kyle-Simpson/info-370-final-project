@@ -14,7 +14,7 @@ data = pd.read_csv("data/prepped/compiled_data.csv")
 data = data.drop(["FOODINSEC_CHILD_03_11", "FOODINSEC_CHILD_01_07", "PERCHLDPOV10", "PERPOV10", "FOODINSEC_10_12",
                   "VLFOODSEC_10_12", "PCT_LACCESS_HHNV10", "PCT_NHBLACK10", "FOODINSEC_13_15", "VLFOODSEC_13_15",
                   "MILK_PRICE10", "REDEMP_WICS08", "PCT_NHNA10", "SNAP_CAP09", "PCT_LACCESS_LOWI10", "PCT_HISP10",
-                  "ORCHARD_ACRES07", "FIPS", "FIPS"], 1)
+                  "ORCHARD_ACRES07", "Unnamed: 0"], 1)
 # Food insecurity all specific to children: 
 
 # What does food insecurity look like on a map?
@@ -24,9 +24,8 @@ data = data.drop(["FOODINSEC_CHILD_03_11", "FOODINSEC_CHILD_01_07", "PERCHLDPOV1
 
 
 def plot_food_insec(type_insec, label):
-    plt.figure(figsize=(10,10))
     fig, ax = plt.subplots(1, 3)
-    fig.set_figheight(10)
+    fig.set_figheight(5)
     fig.set_figwidth(20)
 
     label = label + " Food Insecurity"
@@ -52,6 +51,7 @@ def plot_food_insec(type_insec, label):
     ax[1].set_ylim(0, 40)
     ax[2].set_ylim(0, 40)
     ax[2].set_xlim(0, 100)
+    plt.show()
 
 def plot_adult_food_insec():
     plot_food_insec("Food_Insec", "Adult")
@@ -59,14 +59,10 @@ def plot_adult_food_insec():
 def plot_child_food_insec():
     plot_food_insec("Food_Insec_Children", "Child")
 
-#plot_adult_food_insec()
-#plot_child_food_insec()
 
-'''
-plt.figure(figsize=(20,20))
-plt.scatter(data.PCT_NHWHITE10, data.Food_Insec)
-plt.title("Percent white versus food insecurity")
-plt.show()
+correl = abs(data.corr()['Food_Insec_Children'])
+correl = correl.drop(['Food_Insec_Children', 'Food_Insec'], 0)
+correl = correl[correl >= .1]
 
 # Snap versus food insecurity
 plt.figure(figsize=(10,10))
@@ -75,7 +71,27 @@ plt.scatter(data.REDEMP_SNAPS16, data.Food_Insec)
 corr = data.corr()[['Food_Insec', 'Food_Insec_Children']]
 '''
 #%%
-
+def plot_income():
+    fig, ax = plt.subplots(1, 3)
+    fig.set_figheight(5)
+    fig.set_figwidth(20)
+    
+    sns.distplot(data.MEDHHINC15.dropna(), kde=False, ax=ax[0])
+    ax[0].set_title("Histogram of Median Income")
+    ax[0].set_xlabel("Median Household Income")
+    
+    sns.distplot(data.POVRATE15.dropna(), kde=False, ax=ax[1])
+    ax[1].set_title("Histogram of Poverty Rate")
+    ax[1].set_xlabel("Poverty Rate")
+    
+    sns.regplot(data.MEDHHINC15, data.POVRATE15, ax=ax[2], 
+                scatter_kws={'alpha':0.3}, line_kws={"color": "black"})
+    ax[2].set_title("Median Income versus Poverty Rate")
+    ax[2].set_xlabel("Median Household Income")
+    ax[2].set_ylabel("Poverty Rate")
+    ax[2].set_ylim(0, 60)
+    plt.show()
+    
 # How much food insecurity is there?
 plt.hist(data.Food_Insec_Children, alpha=0.4, label="Child Food Insecurity")
 plt.hist(data.Food_Insec, alpha=0.4, label="Adult Food Insecurity")

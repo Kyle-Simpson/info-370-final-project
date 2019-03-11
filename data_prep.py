@@ -1,4 +1,7 @@
 import pandas as pd
+import numpy as np
+from sklearn.model_selection import train_test_split
+import re 
 
 # Read in data file
 xls = pd.ExcelFile('./data/raw/DataDownload.xls')
@@ -36,13 +39,11 @@ local.drop(columns=state_county, inplace=True)
 # We also dropped taxes because the actual prices seems more relevant
 to_drop = ['MILK_SODA_PRICE10', 'SODATAX_VENDM14', 'CHIPSTAX_VENDM14', 'SODATAX_STORES14', 'CHIPSTAX_STORES14', 'FOOD_TAX14']
 prices_taxes.drop(columns=to_drop, inplace=True)
-prices_taxes.columns
 
 # RESTAURANTS
 # We also dropped things related to population because we have a population column and can determine its relevance with the predictive model
 to_drop = ['PCH_FFRPTH_09_14', 'PCH_FFR_09_14', 'PCH_FSR_09_14', 'PCH_FSRPTH_09_14', 'PC_FFRSALES07', 'FFRPTH09', 'FFRPTH14', 'FSRPTH09', 'FSRPTH14', 'PC_FFRSALES12', 'PC_FSRSALES07', 'PC_FSRSALES12']
 restaurants.drop(columns=to_drop, inplace=True)
-restaurants.columns
 
 # ASSISTANCE
 # We only dropped the percentages here
@@ -58,7 +59,6 @@ to_drop = ['PCH_REDEMP_SNAPS_12_16', 'PCT_SNAP12', 'PCT_SNAP16', 'PCH_SNAP_12_16
        'PCH_CACFP_09_15'
        ]
 assistance.drop(columns=to_drop, inplace=True)
-assistance.columns
 
 # LOCAL
 # Only included columns that seems directly relevant or "pure" in the sense that they had numbers we could draw conclusions from
@@ -69,7 +69,6 @@ wanted = ['FIPS', 'DIRSALES07','DIRSALES12','FMRKT09','FMRKT16','FMRKT_SNAP16','
     'FOODHUB16','FARM_TO_SCHOOL09','FARM_TO_SCHOOL13'
 ]
 local = local[wanted]
-local.columns
 
 county = pd.read_csv("data/prepped/insec15.csv")
 county["FIPS"] = county.Fips
@@ -85,7 +84,28 @@ scoped = scoped.merge(restaurants, on='FIPS')
 scoped = scoped.merge(assistance, on='FIPS')
 scoped = scoped.merge(local, on='FIPS')
 scoped = scoped.merge(county, on='FIPS')
-scoped
 
-# Write scoped variables to new csv
-scoped.to_csv('./data/prepped/compiled_data.csv', sep=",", index=False)
+cols = ['2010 Census Population',	'Population Estimate, 2011',	'Population Estimate, 2012',	'Population Estimate, 2013',	'Population Estimate, 2014',	'Population Estimate, 2015',	'Population Estimate, 2016']
+for idx, row in scoped.iterrows():
+    for col in cols:
+        scoped.loc[idx, col] = np.float64(re.sub('[^0-9]', '', row[col]))
+
+scoped.drop(columns=['FIPS','County', 'State'], inplace=True)
+scoped.fillna(-1, inplace=True)
+
+# Train, test, split
+train_features, test_features, train_outcome, test_outcome = train_test_split(
+    scoped, #features
+    scoped.Food_Insec_Children, #outcome # or scoped['FOODINSEC_CHILD_03_11']
+    test_size=0.30, #percent of data to use as test set
+    random_state=11
+)
+
+
+scoped.to_csv('./data/prepped/compiled_data.csv', sep=',')
+
+train_features.to_csv('./data/prepped/train_features.csv', sep=',')
+test_features.to_csv('./data/prepped/test_features.csv', sep=',')
+train_outcome.to_csv('./data/prepped/train_outcome.csv', sep=',')
+test_outcome.to_csv('./data/prepped/test_outcome.csv', sep=',')
+
