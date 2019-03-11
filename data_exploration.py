@@ -85,7 +85,7 @@ def plot_income():
     ax[2].set_ylim(0, 60)
     plt.show()
     
-print(data.POVRATE15.dropna().mean())
+
 # How much food insecurity is there?
 
 # How do types and density of stores correlate with food insecurity?
