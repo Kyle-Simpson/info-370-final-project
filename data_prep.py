@@ -90,7 +90,7 @@ for idx, row in scoped.iterrows():
     for col in cols:
         scoped.loc[idx, col] = np.float64(re.sub('[^0-9]', '', row[col]))
 
-scoped.drop(columns=['FIPS','County', 'State'], inplace=True)
+scoped.drop(columns=['County', 'State'], inplace=True)
 scoped.fillna(-1, inplace=True)
 
 # Train, test, split

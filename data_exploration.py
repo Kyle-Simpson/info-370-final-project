@@ -9,6 +9,10 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
+import plotly
+import plotly.plotly as py
+from plotly.offline import download_plotlyjs, init_notebook_mode, plot, iplot
+import plotly.figure_factory as ff
 
 data = pd.read_csv("data/prepped/compiled_data.csv")
 data = data.drop(["FOODINSEC_CHILD_03_11", "FOODINSEC_CHILD_01_07", "PERCHLDPOV10", "PERPOV10", "FOODINSEC_10_12",
@@ -69,7 +73,31 @@ plt.figure(figsize=(10,10))
 plt.scatter(data.REDEMP_SNAPS16, data.Food_Insec)
 
 corr = data.corr()[['Food_Insec', 'Food_Insec_Children']]
-'''
+
+def draw_map():
+    
+    #set_creds()
+    init_notebook_mode(connected=True)
+    data = pd.read_csv("data/prepped/compiled_data.csv")
+    
+    colorscale = ["#f7fbff","#ebf3fb","#deebf7","#d2e3f3","#c6dbef","#b3d2e9","#9ecae1",
+                  "#85bcdb","#6baed6","#57a0ce","#4292c6","#3082be","#2171b5","#1361a9",
+                  "#08519c","#0b4083","#08306b"]
+    endpts = list(np.linspace(1, 25, len(colorscale) - 1))
+    fips = data['FIPS'].tolist()
+    values = data['Food_Insec_Children'].tolist()
+    
+    fig = ff.create_choropleth(
+        fips=fips, values=values,
+        binning_endpoints=endpts,
+        colorscale=colorscale,
+        show_state_data=False,
+        show_hover=True, centroid_marker={'opacity': 0},
+        asp=2.9, title='Child Food Insecurity',
+        legend_title='Child Food Insecuirty %'
+    )
+    plotly.offline.iplot(fig, filename='choropleth_full_usa')
+
 #%%
 def plot_income():
     fig, ax = plt.subplots(1, 3)
@@ -93,8 +121,8 @@ def plot_income():
     plt.show()
     
 # How much food insecurity is there?
-plt.hist(data.Food_Insec_Children, alpha=0.4, label="Child Food Insecurity")
-plt.hist(data.Food_Insec, alpha=0.4, label="Adult Food Insecurity")
+#plt.hist(data.Food_Insec_Children, alpha=0.4, label="Child Food Insecurity")
+#plt.hist(data.Food_Insec, alpha=0.4, label="Adult Food Insecurity")
 
 # How do types and density of stores correlate with food insecurity?
 # ie more junk food -> food insecurity?
