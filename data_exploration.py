@@ -19,13 +19,6 @@ data = data.drop(["FOODINSEC_CHILD_03_11", "FOODINSEC_CHILD_01_07", "PERCHLDPOV1
                   "VLFOODSEC_10_12", "PCT_LACCESS_HHNV10", "PCT_NHBLACK10", "FOODINSEC_13_15", "VLFOODSEC_13_15",
                   "MILK_PRICE10", "REDEMP_WICS08", "PCT_NHNA10", "SNAP_CAP09", "PCT_LACCESS_LOWI10", "PCT_HISP10",
                   "ORCHARD_ACRES07", "Unnamed: 0"], 1)
-# Food insecurity all specific to children: 
-
-# What does food insecurity look like on a map?
-
-# How does food insecurity relate to income and race?
-
-
 
 def plot_food_insec(type_insec, label):
     fig, ax = plt.subplots(1, 3)
@@ -74,6 +67,17 @@ plt.scatter(data.REDEMP_SNAPS16, data.Food_Insec)
 
 corr = data.corr()[['Food_Insec', 'Food_Insec_Children']]
 
+def plot_snap():
+    fig, ax = plt.subplots()
+    fig.set_figheight(7)
+    fig.set_figwidth(14)
+    
+    ax.set_title("SNAP Distribution vs. Child Food Insecurity")
+    sns.regplot(data.REDEMP_SNAPS16, data.Food_Insec_Children, line_kws={"color": "black"}, 
+                scatter_kws={'alpha':0.3}, ax=ax)
+    ax.set_xlabel("SNAP Distribution")
+    ax.set_ylabel("Child Food Insecurity")
+
 def draw_map():
     
     #set_creds()
@@ -91,14 +95,13 @@ def draw_map():
         fips=fips, values=values,
         binning_endpoints=endpts,
         colorscale=colorscale,
-        show_state_data=False,
+        show_state_data=True,
         show_hover=True, centroid_marker={'opacity': 0},
         asp=2.9, title='Child Food Insecurity',
         legend_title='Child Food Insecuirty %'
     )
     plotly.offline.iplot(fig, filename='choropleth_full_usa')
 
-#%%
 def plot_income():
     fig, ax = plt.subplots(1, 3)
     fig.set_figheight(5)
@@ -121,8 +124,18 @@ def plot_income():
     plt.show()
     
 # How much food insecurity is there?
-#plt.hist(data.Food_Insec_Children, alpha=0.4, label="Child Food Insecurity")
-#plt.hist(data.Food_Insec, alpha=0.4, label="Adult Food Insecurity")
+def plot_insec_distribution():
+    fig, ax = plt.subplots()
+    fig.set_figheight(7)
+    fig.set_figwidth(14)
+    label = ["Children", "Adult"]
+    for i, a in enumerate([data.Food_Insec_Children, data.Food_Insec]):
+        sns.distplot(a, bins=range(1, 40, 2), ax=ax, kde=False, label=label[i])
+    ax.set_xlim([0, 40])
+    ax.legend()
+    ax.set_title("Food Insecurity")
+    ax.set_xlabel("Food Insecurity Percentage")
+    ax.set_ylabel("Count")
 
 # How do types and density of stores correlate with food insecurity?
 # ie more junk food -> food insecurity?
