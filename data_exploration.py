@@ -59,8 +59,8 @@ def plot_adult_food_insec():
 def plot_child_food_insec():
     plot_food_insec("Food_Insec_Children", "Child")
 
-plot_adult_food_insec()
-plot_child_food_insec()
+#plot_adult_food_insec()
+#plot_child_food_insec()
 
 '''
 plt.figure(figsize=(20,20))
@@ -74,8 +74,11 @@ plt.scatter(data.REDEMP_SNAPS16, data.Food_Insec)
 
 corr = data.corr()[['Food_Insec', 'Food_Insec_Children']]
 '''
+#%%
 
 # How much food insecurity is there?
+plt.hist(data.Food_Insec_Children, alpha=0.4, label="Child Food Insecurity")
+plt.hist(data.Food_Insec, alpha=0.4, label="Adult Food Insecurity")
 
 # How do types and density of stores correlate with food insecurity?
 # ie more junk food -> food insecurity?
