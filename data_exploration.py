@@ -14,7 +14,7 @@ data = pd.read_csv("data/prepped/compiled_data.csv")
 data = data.drop(["FOODINSEC_CHILD_03_11", "FOODINSEC_CHILD_01_07", "PERCHLDPOV10", "PERPOV10", "FOODINSEC_10_12",
                   "VLFOODSEC_10_12", "PCT_LACCESS_HHNV10", "PCT_NHBLACK10", "FOODINSEC_13_15", "VLFOODSEC_13_15",
                   "MILK_PRICE10", "REDEMP_WICS08", "PCT_NHNA10", "SNAP_CAP09", "PCT_LACCESS_LOWI10", "PCT_HISP10",
-                  "ORCHARD_ACRES07", "FIPS", "FIPS"], 1)
+                  "ORCHARD_ACRES07", "Unnamed: 0"], 1)
 # Food insecurity all specific to children: 
 
 # What does food insecurity look like on a map?

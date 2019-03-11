@@ -102,6 +102,7 @@ train_features, test_features, train_outcome, test_outcome = train_test_split(
 )
 
 
+scoped.to_csv('./data/prepped/compiled_data.csv', sep=',')
 
 train_features.to_csv('./data/prepped/train_features.csv', sep=',')
 test_features.to_csv('./data/prepped/test_features.csv', sep=',')
