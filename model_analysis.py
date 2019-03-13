@@ -19,4 +19,6 @@ def plot_accuracy():
     plt.title("Actual Child Food Insecurity versus Predicted Food Insecurity")
     plt.xlabel("Actual")
     plt.ylabel("Predicted")
-    
+    plt.savefig("accuracy")
+
+plot_accuracy()

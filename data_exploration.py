@@ -49,6 +49,7 @@ def plot_food_insec(type_insec, label):
     ax[1].set_ylim(0, 40)
     ax[2].set_ylim(0, 40)
     ax[2].set_xlim(0, 100)
+    plt.savefig(label)
     plt.show()
 
 def plot_adult_food_insec():
@@ -100,6 +101,7 @@ def plot_snap():
             ax[i][j].set_xlabel('% In ' + display[index])
             ax[i][j].set_ylabel("Child Food Insecurity")
             index += 1
+    plt.savefig("snap")
 
 # Does income have an effect on how many people use assistance programs?
 def plot_snap_income():
@@ -120,6 +122,7 @@ def plot_snap_income():
             ax[i][j].set_ylabel('% In ' + display[index])
             ax[i][j].set_xlabel("Median Household Income")
             index += 1
+    plt.savefig("income_snap")
 
 # How does child food insecurity look across the country?
 def draw_map():
@@ -172,6 +175,7 @@ def plot_income():
     ax[2].set_xlabel("Median Household Income")
     ax[2].set_ylabel("Poverty Rate")
     ax[2].set_ylim(0, 60)
+    plt.savefig("income")
     plt.show()
     
 # How much food insecurity is there?
@@ -190,4 +194,5 @@ def plot_insec_distribution():
     ax.set_title("Food Insecurity")
     ax.set_xlabel("Food Insecurity Percentage")
     ax.set_ylabel("Count")
+    plt.savefig("insec")
 
