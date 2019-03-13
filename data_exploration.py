@@ -66,10 +66,11 @@ def plot_child_food_insec():
 # FSR14 full service restuarant 
 #def plot_restuarant():
 # restuarnt plotting stuff
-data_rest = data[["FFR14", "FSR14", "Food_Insec_Children"]]
-data_rest.dropna()
-restuarant_ratio = data_rest.FFR14 / data_rest.FSR14
-plt.hist(restuarant_ratio)
+    
+#data_rest = data[["FFR14", "FSR14", "Food_Insec_Children"]]
+#data_rest.dropna()
+#restuarant_ratio = data_rest.FFR14 / data_rest.FSR14
+#plt.hist(restuarant_ratio)
 
 #plot_restuarant()
 
@@ -96,7 +97,10 @@ def plot_snap():
             index += 1
 
 def draw_map():
-    
+    """
+    Will draw a chloropleth map of child food insecurity for all counties. Saves it to
+    the online plotly account
+    """
     #set_creds()
     init_notebook_mode(connected=True)
     data = pd.read_csv("data/prepped/compiled_data.csv")
@@ -112,12 +116,12 @@ def draw_map():
         fips=fips, values=values,
         binning_endpoints=endpts,
         colorscale=colorscale,
-        show_state_data=True,
+        show_state_data=False,
         show_hover=True, centroid_marker={'opacity': 0},
         asp=2.9, title='Child Food Insecurity',
         legend_title='Child Food Insecuirty %'
     )
-    plotly.offline.iplot(fig, filename='choropleth_full_usa')
+    py.iplot(fig, filename='choropleth_full_usa')
 
 def plot_income():
     fig, ax = plt.subplots(1, 3)
