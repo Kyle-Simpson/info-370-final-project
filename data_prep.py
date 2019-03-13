@@ -47,15 +47,15 @@ restaurants.drop(columns=to_drop, inplace=True)
 
 # ASSISTANCE
 # We only dropped the percentages here
-to_drop = ['PCH_REDEMP_SNAPS_12_16', 'PCT_SNAP12', 'PCT_SNAP16', 'PCH_SNAP_12_16',
+to_drop = ['PCH_REDEMP_SNAPS_12_16', 'PCT_SNAP12', 'PCH_SNAP_12_16',
        'PC_SNAPBEN10', 'PC_SNAPBEN15', 'PCH_PC_SNAPBEN_10_15','SNAP_PART_RATE08', 'SNAP_PART_RATE13',
        'SNAP_REPORTSIMPLE09', 'SNAP_REPORTSIMPLE16', 'PCT_NSLP09',
-       'PCT_NSLP15', 'PCH_NSLP_09_15', 'PCT_FREE_LUNCH09', 'PCT_FREE_LUNCH14',
-       'PCT_REDUCED_LUNCH09', 'PCT_REDUCED_LUNCH14', 'PCT_SBP09', 'PCT_SBP15',
-       'PCH_SBP_09_15', 'PCT_SFSP09', 'PCT_SFSP15', 'PCH_SFSP_09_15',
+       'PCH_NSLP_09_15', 'PCT_FREE_LUNCH09', 'PCT_FREE_LUNCH14',
+       'PCT_REDUCED_LUNCH09', 'PCT_REDUCED_LUNCH14', 'PCT_SBP09',
+       'PCH_SBP_09_15', 'PCT_SFSP09', 'PCH_SFSP_09_15',
        'PC_WIC_REDEMP08', 'PC_WIC_REDEMP12', 'PCH_PC_WIC_REDEMP_08_12',
        'PCH_REDEMP_WICS_08_12', 'PCT_WIC09',
-       'PCT_WIC15', 'PCH_WIC_09_15', 'PCT_CACFP09', 'PCT_CACFP15',
+       'PCH_WIC_09_15', 'PCT_CACFP09',
        'PCH_CACFP_09_15'
        ]
 assistance.drop(columns=to_drop, inplace=True)
@@ -70,6 +70,7 @@ wanted = ['FIPS', 'DIRSALES07','DIRSALES12','FMRKT09','FMRKT16','FMRKT_SNAP16','
 ]
 local = local[wanted]
 
+# read in county level data for food insecurity
 county = pd.read_csv("data/prepped/insec15.csv")
 county["FIPS"] = county.Fips
 county = county[["FIPS", "Food_Insec", "Food_Insec_Children"]]

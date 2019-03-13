@@ -57,29 +57,50 @@ def plot_child_food_insec():
     plot_food_insec("Food_Insec_Children", "Child")
 
 
-correl = abs(data.corr()['Food_Insec_Children'])
-correl = correl.drop(['Food_Insec_Children', 'Food_Insec'], 0)
-correl = correl[correl >= .1]
+#correl = abs(data.corr()['Food_Insec_Children'])
+#correl = correl.drop(['Food_Insec_Children', 'Food_Insec'], 0)
+#correl = correl[correl >= .1]
+#corr = data.corr()[['Food_Insec', 'Food_Insec_Children']]
 
-# Snap versus food insecurity
-plt.figure(figsize=(10,10))
-plt.scatter(data.REDEMP_SNAPS16, data.Food_Insec)
-
-corr = data.corr()[['Food_Insec', 'Food_Insec_Children']]
-
-def plot_snap():
-    fig, ax = plt.subplots()
-    fig.set_figheight(7)
-    fig.set_figwidth(14)
+# FFR14 fast food rest
+# FSR14 full service restuarant 
+#def plot_restuarant():
+# restuarnt plotting stuff
     
-    ax.set_title("SNAP Distribution vs. Child Food Insecurity")
-    sns.regplot(data.REDEMP_SNAPS16, data.Food_Insec_Children, line_kws={"color": "black"}, 
-                scatter_kws={'alpha':0.3}, ax=ax)
-    ax.set_xlabel("SNAP Distribution")
-    ax.set_ylabel("Child Food Insecurity")
+#data_rest = data[["FFR14", "FSR14", "Food_Insec_Children"]]
+#data_rest.dropna()
+#restuarant_ratio = data_rest.FFR14 / data_rest.FSR14
+#plt.hist(restuarant_ratio)
+
+#plot_restuarant()
+
+# PCT_NSLP15  percent national school lunch program
+# PCT_SBP15 percent school breakfast program
+# PCT_SFSP15 summer food service program
+# PCT_WIC15
+# PCT_SNAPS16
+# PCT_CACFP15 child and adult care 
+def plot_snap():
+    fig, ax = plt.subplots(2, 3)
+    fig.set_figheight(15)
+    fig.set_figwidth(20)
+    columns = ['PCT_NSLP15', 'PCT_SBP15', 'PCT_SFSP15', 'PCT_WIC15', 'PCT_SNAP16', 'PCT_CACFP15']
+    display = ['National School Lunch Program', 'School Breakfast Program', 'Summer Food Program',
+               'Woman, Infant, Child Program', 'Supplemental Nutrition Assistance Program', 'Child Adult Food Program']
+    index = 0
+    for i in range(0,2):
+        for j in range(0,3):
+            sns.regplot(data[columns[index]], data.Food_Insec_Children, line_kws={"color": "black"}, 
+                        scatter_kws={'alpha':0.3}, ax=ax[i][j])
+            ax[i][j].set_xlabel('% In ' + display[index])
+            ax[i][j].set_ylabel("Child Food Insecurity")
+            index += 1
 
 def draw_map():
-    
+    """
+    Will draw a chloropleth map of child food insecurity for all counties. Saves it to
+    the online plotly account
+    """
     #set_creds()
     init_notebook_mode(connected=True)
     data = pd.read_csv("data/prepped/compiled_data.csv")
@@ -95,12 +116,12 @@ def draw_map():
         fips=fips, values=values,
         binning_endpoints=endpts,
         colorscale=colorscale,
-        show_state_data=True,
+        show_state_data=False,
         show_hover=True, centroid_marker={'opacity': 0},
         asp=2.9, title='Child Food Insecurity',
         legend_title='Child Food Insecuirty %'
     )
-    plotly.offline.iplot(fig, filename='choropleth_full_usa')
+    py.iplot(fig, filename='choropleth_full_usa')
 
 def plot_income():
     fig, ax = plt.subplots(1, 3)
