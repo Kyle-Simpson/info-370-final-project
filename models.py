@@ -9,6 +9,8 @@ from sklearn.neural_network import MLPClassifier
 from sklearn.model_selection import GridSearchCV
 from sklearn.neighbors import KNeighborsClassifier
 
+
+
 def get_score(name, classifier, param_grid):
     # Read in prepped data
     train_features = pd.read_csv('./data/prepped/train_features.csv', sep=',')
@@ -71,6 +73,10 @@ neighbors_param, neighbors_score, neighbors_pred = get_score('K Nearest Neighbor
 tree_param, tree_score, tree_pred = get_score('Decision Trees', tree_clf, tree_grid)
 neural_param, neural_score, neural_pred = get_score('Neural Network', neural_clf, neural_grid)
 ada_param, ada_score, ada_pred = get_score('ADA Boost', ada_clf, ada_grid)
+
+pd.DataFrame(tree_pred).to_csv('./data/prepped/predictions.csv')
+
+    
 
 # Print Scores
 print(neighbors_score) 
