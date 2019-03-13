@@ -20,6 +20,7 @@ data = data.drop(["FOODINSEC_CHILD_03_11", "FOODINSEC_CHILD_01_07", "PERCHLDPOV1
                   "MILK_PRICE10", "REDEMP_WICS08", "PCT_NHNA10", "SNAP_CAP09", "PCT_LACCESS_LOWI10", "PCT_HISP10",
                   "ORCHARD_ACRES07", "Unnamed: 0"], 1)
 
+# What does food insecurity have to do with income, poverty and race?
 def plot_food_insec(type_insec, label):
     fig, ax = plt.subplots(1, 3)
     fig.set_figheight(5)
@@ -80,7 +81,11 @@ def plot_child_food_insec():
 # PCT_WIC15
 # PCT_SNAPS16
 # PCT_CACFP15 child and adult care 
+# How does food insecurity relate to assistance programs?
 def plot_snap():
+    '''
+    Plots % in various assistance programs against child food insecurity
+    '''
     fig, ax = plt.subplots(2, 3)
     fig.set_figheight(15)
     fig.set_figwidth(20)
@@ -96,6 +101,27 @@ def plot_snap():
             ax[i][j].set_ylabel("Child Food Insecurity")
             index += 1
 
+# Does income have an effect on how many people use assistance programs?
+def plot_snap_income():
+    '''
+    Plots median household income against % in various assistance programs
+    '''
+    fig, ax = plt.subplots(2, 3)
+    fig.set_figheight(15)
+    fig.set_figwidth(20)
+    columns = ['PCT_NSLP15', 'PCT_SBP15', 'PCT_SFSP15', 'PCT_WIC15', 'PCT_SNAP16', 'PCT_CACFP15']
+    display = ['National School Lunch Program', 'School Breakfast Program', 'Summer Food Program',
+               'Woman, Infant, Child Program', 'Supplemental Nutrition Assistance Program', 'Child Adult Food Program']
+    index = 0
+    for i in range(0,2):
+        for j in range(0,3):
+            sns.regplot(data.MEDHHINC15.dropna(), data[columns[index]], line_kws={"color": "black"}, 
+                        scatter_kws={'alpha':0.3}, ax=ax[i][j])
+            ax[i][j].set_ylabel('% In ' + display[index])
+            ax[i][j].set_xlabel("Median Household Income")
+            index += 1
+
+# How does child food insecurity look across the country?
 def draw_map():
     """
     Will draw a chloropleth map of child food insecurity for all counties. Saves it to
@@ -123,7 +149,11 @@ def draw_map():
     )
     py.iplot(fig, filename='choropleth_full_usa')
 
+# What does median income and poverty rate look like in the US?
 def plot_income():
+    '''
+    Plots data about income and poverty rate
+    '''
     fig, ax = plt.subplots(1, 3)
     fig.set_figheight(5)
     fig.set_figwidth(20)
@@ -146,6 +176,9 @@ def plot_income():
     
 # How much food insecurity is there?
 def plot_insec_distribution():
+    '''
+    Plots how much adult and child food insecurity there is
+    '''
     fig, ax = plt.subplots()
     fig.set_figheight(7)
     fig.set_figwidth(14)
@@ -158,11 +191,3 @@ def plot_insec_distribution():
     ax.set_xlabel("Food Insecurity Percentage")
     ax.set_ylabel("Count")
 
-# How do types and density of stores correlate with food insecurity?
-# ie more junk food -> food insecurity?
-
-# How does the population to area ratio affect food insecurity?
-
-# How do food programs relate to food insecurity?
-
-# How does adult food insecurity relate to children food insecurity?

@@ -69,17 +69,17 @@ ada_grid = {
 }
 
 # Run Scores
-#neighbors_param, neighbors_score, neighbors_pred = get_score('K Nearest Neighbors', neighbors_clf, neighbors_grid)
+neighbors_param, neighbors_score, neighbors_pred = get_score('K Nearest Neighbors', neighbors_clf, neighbors_grid)
 tree_param, tree_score, tree_pred = get_score('Decision Trees', tree_clf, tree_grid)
-#neural_param, neural_score, neural_pred = get_score('Neural Network', neural_clf, neural_grid)
-#ada_param, ada_score, ada_pred = get_score('ADA Boost', ada_clf, ada_grid)
+neural_param, neural_score, neural_pred = get_score('Neural Network', neural_clf, neural_grid)
+ada_param, ada_score, ada_pred = get_score('ADA Boost', ada_clf, ada_grid)
 
 pd.DataFrame(tree_pred).to_csv('./data/prepped/predictions.csv')
 
     
 
 # Print Scores
-#print(neighbors_score) 
+print(neighbors_score) 
 print(tree_score) 
-#print(neural_score) 
-#print(ada_score)
+print(neural_score) 
+print(ada_score)
